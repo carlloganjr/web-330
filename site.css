@@ -1,0 +1,86 @@
+/* 
+    Title: site.css
+    Author: Carl Logan
+    Date: 8/13/2022
+    Description: Standard CSS styling to be used for assignments.
+*/
+
+/* Center the header text */
+.app-header {
+  text-align: center;
+}
+
+/* Applies to the return link */
+.return-home {
+  color: #4F3674;
+  text-decoration: none;
+}
+
+/* Applies to the return link */
+.return-home:hover {
+  background-color: #D6A800;
+  color: #4F3674;
+}
+
+/* Applies to the return link */
+.return-home:visited {
+  color: #3C275A;
+}
+
+/* Applies to form container */
+.form {
+  display: inline-grid;
+  grid-template-columns: auto;
+}
+
+/* Padding to form field */
+.form-field {
+  padding: 20px;
+}
+
+/* Ensuring full width to specified elements */
+.full-width {
+  width: 100%;
+}
+
+/* Set the container margins */
+#container {
+  margin: 50px 100px 0 100px;
+}
+
+/* Set the cursor over the icon */
+#icon-mode:hover {
+  cursor: pointer;
+}
+
+/* Set the icon styles */
+#icon-text {
+  padding-left: 10px;
+}
+
+/* Adjust margin for the icon element */
+#icon-mode {
+  margin-top: -30px;
+}
+
+/* Float value for specified elements */
+.pull-right {
+  float: right;
+}
+
+/* Styling for the assignment containers */
+.assign-container {
+  padding: 10px;
+}
+
+/* Styling for the assignment content */
+.assign-content {
+  width: 600px;
+  margin: 3% auto 0;
+}
+
+/* Styling for the assignment results */
+.assign-results-text {
+  text-align: center;
+  font-size: 28px;
+}
