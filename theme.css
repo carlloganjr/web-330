@@ -10,6 +10,7 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s;
   background-color: var(--card-background-color);
+  margin-top: 25px;
 }
 
 /* card title styling and CSS variables used to set light and dark themes*/
@@ -94,6 +95,8 @@ body.light-theme {
   --btn-hover-background-color: #D6A800;
   --btn-hover-color: #4F3674;
   --input-border-color: #ccc;
+  --none-background: #fff;
+  --none-color: black;
 }
 
 /* Variables for the dark-theme class */
@@ -115,6 +118,8 @@ body.dark-theme {
   --btn-hover-background-color: #7D4787;
   --btn-hover-color: #fff;
   --input-border-color: #303030;
+  --none-background: #303030;
+  --none-color: #D176E1;
 }
 
 /* body styling and CSS variables used to set light and dark themes*/
@@ -126,14 +131,14 @@ body {
 
 /* anchor styling and CSS variables used to set light and dark themes*/
 a {
-  color: var(--anchor-color);
+  color: var(--anchor-color) !important;
   text-decoration: none;
 }
 
 /* anchor styling and CSS variables used to set light and dark themes*/
 a:hover {
-  background-color: var(--anchor-hover-background-color);
-  color: var(--anchor-hover-color);
+  background-color: var(--anchor-hover-background-color) !important;
+  color: var(--anchor-hover-color) !important;
 }
 
 /* header styling and CSS variables used to set light and dark themes*/
@@ -152,3 +157,9 @@ h2, h3, h4 {
   border: solid 1px var(--heading-border-color);
 }
 
+/* styling used for app header */
+.none {
+  color: var(--none-color);
+  background-color: var(--none-background);
+  border: none;
+}
