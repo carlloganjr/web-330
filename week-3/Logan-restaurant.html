@@ -1,0 +1,232 @@
+<!--
+    Title: Logan-restaurant.html
+    Author: Carl Logan
+    Date: 8/25/2022
+    Description: Assignment 3.2 - Restaurant App     
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link rel="stylesheet" type="text/css" href="../theme.css">
+    <link rel="stylesheet" type="text/css" href="../site.css">
+    <link rel="stylesheet" type="text/css" href="./Logan-restaurant.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="../theme.js"></script>
+  </head>
+  <body>
+    <div class="assign-content">
+      <!-- Add an icon using font awesome -->
+      <i onclick="toggleMode(this)" id="icon-mode" 
+      class="fa fa-toggle-off pull-right" style="font-size:28px">
+          <span id="icon-text"></span> 
+      </i>
+      <h1 class="app-header none">Welcome to the Restaurant App!</h1>
+      <!-- container to hold the form inputs -->
+      <div class="card">
+        <!-- Title for the card -->
+        <div class="card-title">
+          Restaurant Menu
+        </div>
+        <!-- Content container for the card -->
+        <div class="card-content">
+        
+          <!-- start of menu container -->
+          <div class="menu-container">
+
+            <!-- Start Beverages card -->
+          <div class="card menu">
+            <!-- Title for the card -->
+            <div class="card-title">
+              Beverages
+            </div>
+            <!-- Content container for the card -->
+            <div class="card-content" id="beverages">
+              
+              <label for="checkLemonade">
+                <input type="checkbox" id="checkLemonade" 
+                name="lemonade" value="3.75" class="input">
+                Lemonade ($3.75)
+              </label>
+              <br/>
+              <label for="checkCola">
+                <input type="checkbox" id="checkCola" 
+                name="cola" value="4.00" class="input">
+                Cola ($4.00)
+              </label>
+              <br/>
+              <label for="checkApple">
+                <input type="checkbox" id="checkApple" 
+                name="apple" value="3.90" class="input">
+                Apple Juice ($3.90)
+              </label>
+              <br/>
+              <label for="checkMilk">
+                <input type="checkbox" id="checkMilk" 
+                name="milk" value="4.85" class="input">
+                Milk ($4.85)
+              </label>
+
+            </div> <!-- end card-content -->
+          </div> 
+          <!-- end Beverages card -->
+
+          <!-- Start Appetizers card -->
+          <div class="card menu">
+            <!-- Title for the card -->
+            <div class="card-title">
+              Appetizers
+            </div>
+            <!-- Content container for the card -->
+            <div class="card-content">
+              
+              
+
+           </div> <!-- end card-content -->
+          </div> 
+          <!-- end Appetizers card -->
+
+          <!-- Start Main Courses card -->
+          <div class="card menu">
+            <!-- Title for the card -->
+            <div class="card-title">
+              Main Courses
+            </div>
+            <!-- Content container for the card -->
+            <div class="card-content">
+              
+              
+
+           </div> <!-- end card-content -->
+          </div> 
+          <!-- end Main Courses card -->
+
+          <!-- Start Desserts card -->
+          <div class="card menu">
+            <!-- Title for the card -->
+            <div class="card-title">
+              Desserts
+            </div>
+            <!-- Content container for the card -->
+            <div class="card-content">
+              
+              
+
+              <button class="btn btn-primary full-width" id="btnOrder">
+                Place Order
+              </button>
+
+           </div> <!-- end card-content -->
+          </div> 
+          <!-- end Desserts card -->
+
+          </div>
+          <!-- end of menu container -->
+
+       </div> <!-- end card-content -->
+      </div> <!-- end card -->
+
+      <!-- This link will return to the course landing page -->
+      <a class="return-home" href="../index.html">Return</a>
+
+      <!-- This card will contain the results from the input  -->
+      <div class="card">
+       <div class="card-title">
+        Order Summary
+        </div>
+        <!-- Results header will be shown here -->
+        <div class="card-content" id="order-total"></div>
+        <!-- Results will be shown here -->
+        <div class="card-content assign-results-text" id="assign-results"></div>
+      </div>
+       
+    </div>
+
+    <script type="module">
+      // import modules
+      import {Bill, Beverage, Appetizer, MainCourse, Dessert} from "./index.js";
+      
+      // onclick event to trigger the arrow function
+      document.getElementById("btnOrder").onclick = () => {
+
+        const beveragesEl = document.getElementById("beverages");
+        const beverages = beverages.getElementsByTagName("input");
+        const bill = new Bill();
+        const orderTotal = document.getElementById("order-total");
+        
+
+        for(let beverage of beverages) {
+          if(beverage.checked) {
+            bill.addBeverage(new Beverage(beverage.name, beverage.value));
+          }
+        }
+
+        orderTotal.innerHTML = `Your order total is ${bill.getTotal()}`;
+      };
+    </script>
+
+    <script>
+  
+      /*
+        ================================================================
+            Title: theme.html
+            Author: Richard Krasso
+            Date: 3/22/2021
+            Description: Sets the default color scheme for the page. If an
+                         event is triggered on the icon element, the local
+                         storage is cleared and modified to reflect the choice
+                         for future use. 
+        ================================================================
+        */
+
+        /**
+         * Set the default theme to light if one has not been set in the browsers localStorage
+         */
+         setDefaultTheme();
+
+         /**
+          * Function to switch the users selected website theme
+          * @param x (this instance)
+          */
+         function toggleMode(x)
+         {
+             let colorTheme = document.body.classList; // get the body's CSS class
+             let iconMode = x.classList; // get the current classes assigned to the triggered button
+ 
+             /**
+              * If the current body class is set to the light-theme, update the user's preference to the dark-theme in the browsers
+              * local storage.
+              */
+             if (colorTheme.value === "light-theme")
+             {
+                 localStorage.clear();
+                 localStorage.setItem("mode", "dark-theme");
+                 localStorage.setItem("iconMode", "fa-toggle-on");
+                 localStorage.setItem("iconText", "Dark Mode");
+             }
+             /**
+              * If the current body class is set to the dark-theme, update the user's preference to the light-theme in the browsers
+              * local storage.
+              */
+             else
+             {
+                 localStorage.clear();
+                 localStorage.setItem("mode", "light-theme");
+                 localStorage.setItem("iconMode", "fa-toggle-off");
+                 localStorage.setItem("iconText", "Light Mode");
+             }
+ 
+             /**
+              * Apply the updated selection to the HTML page elements
+              */
+             colorTheme.value = localStorage.getItem("mode");
+             iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
+             document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText");
+         }
+         
+    </script>
+  </body>
+</html>

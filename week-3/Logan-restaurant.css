@@ -1,0 +1,18 @@
+/* 
+    Title: Logan-restaurant.css
+    Author: Carl Logan
+    Date: 8/25/2022
+    Description: CSS styling for Logan-restaurant.html.
+*/
+
+/* Create the grid for the menu cards */
+.menu-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+}
+
+/* Adjust the individual cards */
+.menu {
+  margin: 5px;
+}
