@@ -9,8 +9,8 @@
 
 // Establish and export the Product class
 export class Product {
-  constructor(home, price) {
-    this.home = home;
+  constructor(name, price) {
+    this.name = name;
     this.price = price;
   }
 }
