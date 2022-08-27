@@ -46,6 +46,7 @@
             <!-- Content container for the card -->
             <div class="card-content" id="beverages">
               
+              <!-- Labels and checkbox inputs for beverages -->
               <label for="checkLemonade">
                 <input type="checkbox" id="checkLemonade" 
                 name="lemonade" value="3.75" class="input">
@@ -54,14 +55,14 @@
               <br/>
               <label for="checkCola">
                 <input type="checkbox" id="checkCola" 
-                name="cola" value="4.00" class="input">
-                Cola ($4.00)
+                name="cola" value="4.25" class="input">
+                Cola ($4.25)
               </label>
               <br/>
               <label for="checkApple">
                 <input type="checkbox" id="checkApple" 
-                name="apple" value="3.90" class="input">
-                Apple Juice ($3.90)
+                name="apple" value="3.95" class="input">
+                Apple Juice ($3.95)
               </label>
               <br/>
               <label for="checkMilk">
@@ -81,9 +82,32 @@
               Appetizers
             </div>
             <!-- Content container for the card -->
-            <div class="card-content">
+            <div class="card-content" id="appetizers">
               
-              
+               <!-- Labels and checkbox inputs for appetizers -->
+              <label for="checkSample">
+                <input type="checkbox" id="checkSample" 
+                name="sample-platter" value="12.99" class="input">
+                Sample Platter ($12.99)
+              </label>
+              <br/>
+              <label for="checkQueso">
+                <input type="checkbox" id="checkQueso" 
+                name="queso-chips" value="8.15" class="input">
+                Queso and chips ($8.15)
+              </label>
+              <br/>
+              <label for="checkGarlic">
+                <input type="checkbox" id="checkGarlic" 
+                name="garlic-knots" value="10.55" class="input">
+                Garlic Knots ($10.55)
+              </label>
+              <br/>
+              <label for="checkVeggies">
+                <input type="checkbox" id="checkVeggies" 
+                name="veggies-dip" value="14.89" class="input">
+                Veggies and dip ($14.89)
+              </label>
 
            </div> <!-- end card-content -->
           </div> 
@@ -96,9 +120,32 @@
               Main Courses
             </div>
             <!-- Content container for the card -->
-            <div class="card-content">
+            <div class="card-content" id="mainCourses">
               
-              
+               <!-- Labels and checkbox inputs for main courses -->
+              <label for="checkFish">
+                <input type="checkbox" id="checkFish" 
+                name="fish-chips" value="17.35" class="input">
+                Fish and chips ($17.35)
+              </label>
+              <br/>
+              <label for="checkEgg">
+                <input type="checkbox" id="checkEgg" 
+                name="egg-salad-sandwich" value="9.65" class="input">
+                Egg Salad Sandwich ($9.65)
+              </label>
+              <br/>
+              <label for="checkPasta">
+                <input type="checkbox" id="checkPasta" 
+                name="pasta-marinara" value="14.59" class="input">
+                Pasta with marinara sauce ($14.59)
+              </label>
+              <br/>
+              <label for="checkVeggiePlatter">
+                <input type="checkbox" id="checkVeggiePlatter" 
+                name="veggies-platter" value="18.98" class="input">
+                Veggie Platter ($18.98)
+              </label>
 
            </div> <!-- end card-content -->
           </div> 
@@ -111,10 +158,34 @@
               Desserts
             </div>
             <!-- Content container for the card -->
-            <div class="card-content">
+            <div class="card-content" id="desserts">
               
-              
+               <!-- Labels and checkbox inputs for desserts -->
+              <label for="checkBrownies">
+                <input type="checkbox" id="checkBrownies" 
+                name="brownies" value="6.99" class="input">
+                Brownies ($6.99)
+              </label>
+              <br/>
+              <label for="checkCheesecake">
+                <input type="checkbox" id="checkCheesecake" 
+                name="cheesecake" value="7.59" class="input">
+                Cheesecake ($7.59)
+              </label>
+              <br/>
+              <label for="checkFriedBread">
+                <input type="checkbox" id="checkFriedBread" 
+                name="fried-bread" value="4.29" class="input">
+                Fried Bread ($4.29)
+              </label>
+              <br/>
+              <label for="checkCreamPuff">
+                <input type="checkbox" id="checkCreamPuff" 
+                name="cream-puff" value="5.55" class="input">
+                Cream Puff ($5.55)
+              </label>
 
+               <!-- Button to trigger the event listener -->
               <button class="btn btn-primary full-width" id="btnOrder">
                 Place Order
               </button>
@@ -137,36 +208,58 @@
        <div class="card-title">
         Order Summary
         </div>
-        <!-- Results header will be shown here -->
-        <div class="card-content" id="order-total"></div>
+
         <!-- Results will be shown here -->
-        <div class="card-content assign-results-text" id="assign-results"></div>
+        <div class="card-content assign-results-text" id="order-total"></div>
       </div>
        
     </div>
 
-    <script type="module">
+    <!-- Start Module Script -->
+    <script type="module"> 
       // import modules
       import {Bill, Beverage, Appetizer, MainCourse, Dessert} from "./index.js";
       
       // onclick event to trigger the arrow function
       document.getElementById("btnOrder").onclick = () => {
 
-        const beveragesEl = document.getElementById("beverages");
-        const beverages = beveragesEl.getElementsByTagName("input");
+        // Capture the elements and HTMLCollection of inputs
+        const beverages = document.getElementById("beverages")
+                          .getElementsByTagName("input");
+        const appetizers = document.getElementById("appetizers")
+                          .getElementsByTagName("input");
+        const mainCourses = document.getElementById("mainCourses")
+                          .getElementsByTagName("input");
+        const desserts = document.getElementById("desserts")
+                          .getElementsByTagName("input");
+      
+        // Create a new instance of the Bill class
         const bill = new Bill();
+        // Get the element to display the total for the bill
         const orderTotal = document.getElementById("order-total");
-        
 
-        for(let beverage of beverages) {
-          if(beverage.checked) {
-            bill.addBeverage(new Beverage(beverage.name, beverage.value));
+        // One function to iterate over all inputs to gather the selections
+        // for use in creating the bill and get the total
+        function checkItem(items, itemMethod, newInstance) {
+          for(let item of items) {
+            if(item.checked) {
+              eval(`bill.${itemMethod}(new ${newInstance}("${item.name}", "${item.value}"))`);
+            }
           }
         }
 
+        // Check all of the menu section for choices
+        // Add the choices to the bill using the appropriate add method
+        // Create an instance of the appropriate class
+        checkItem(beverages, "addBeverage", "Beverage");
+        checkItem(appetizers, "addAppetizer", "Appetizer");
+        checkItem(mainCourses, "addMainCourse", "MainCourse");
+        checkItem(desserts, "addDessert", "Dessert");        
+
+        // Get the total and display it in the Order Summary element
         orderTotal.innerHTML = `Your order total is ${bill.getTotal()}`;
       };
-    </script>
+    </script> <!-- End Module Script -->
 
     <script>
   
