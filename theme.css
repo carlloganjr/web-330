@@ -97,6 +97,11 @@ body.light-theme {
   --input-border-color: #ccc;
   --none-background: #fff;
   --none-color: black;
+  --table-header-background-color: #4F3674;
+  --table-header-color: #fff;
+  --table-border-color: #ddd;
+  --table-hover-background-color: #D6A800;
+  --table-hover-color: #4F3674;
 }
 
 /* Variables for the dark-theme class */
@@ -120,6 +125,11 @@ body.dark-theme {
   --input-border-color: #303030;
   --none-background: #303030;
   --none-color: #D176E1;
+  --table-header-background-color: #D176E1;
+  --table-header-color: #fff;
+  --table-border-color: #303030;
+  --table-hover-background-color: #7D4787;
+  --table-hover-color: #fff;
 }
 
 /* body styling and CSS variables used to set light and dark themes*/
@@ -162,4 +172,25 @@ h2, h3, h4 {
   color: var(--none-color);
   background-color: var(--none-background);
   border: none;
+}
+
+/* styling used for table header */
+.table th {
+  background-color: var(--table-header-background-color);
+  color: var(--table-header-color);
+  padding: 12px;
+  text-align: left;
+}
+
+/* styling used for table data and header */
+.table td, th {
+  border: 1px, solid var(--table-border-color);
+  padding: 8px;
+}
+
+/* styling used for table row hover */
+tr:hover {
+  background-color: var(--table-hover-background-color);
+  color: var(--table-hover-color);
+  cursor: pointer;
 }

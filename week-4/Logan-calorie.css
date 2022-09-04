@@ -1,0 +1,15 @@
+/* 
+    Title: Logan-calorie.css
+    Author: Carl Logan
+    Date: 8/30/2022
+    Description: CSS styling for Logan-calorie.html.
+*/
+
+/* Style the results */
+#foodList {
+  float: right;
+  color: #DF546A;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
