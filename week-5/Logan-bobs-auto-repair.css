@@ -1,0 +1,26 @@
+/* 
+    Title: Logan-bobs-auto-repair.css
+    Author: Carl Logan
+    Date: 9/5/2022
+    Description: CSS styling for Logan-bobs-auto-repair.html.
+*/
+
+/* Styling for the cart message */
+#cart-message {
+    float: right;
+    color: #DF546A;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* Change the cursor fir the <i> to pointer on hover */
+i:hover {
+    cursor: pointer;
+}
+
+/* Styling for the custom cart component */
+cart-component {
+    color: var(--card-title-color);
+    font-size: 36px;
+    margin-left: 45%;
+}
