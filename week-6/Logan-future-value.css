@@ -1,0 +1,30 @@
+/*
+    Title: Logan-future-value.css
+    Author: Carl Logan
+    Date: 9/12/22
+    Description: Styling for Logan-future-value.html
+    Sources: Professor Krasso 
+    https://github.com/buwebdev/web-330/blob/master/styles/flex-layout.css
+ */
+ 
+/* flex-layout.css imported from the root folder */
+@import url(../flex-layout.css);
+
+/* set the error text */
+.danger {
+    float: right;
+    color: #DF546A;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* modify the label to be inline */
+.form-label {
+    display: inline-block;
+    padding-top: 1rem;
+}
+
+/* center the lower error text */
+#dangerMessage {
+    text-align: center;
+}

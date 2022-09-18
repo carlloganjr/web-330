@@ -1,0 +1,242 @@
+<!--
+    Title: Logan-bobs-auto-repair.html
+    Author: Carl Logan
+    Date: 9/5/2022
+    Description: Assignment 5.2 -  Bob’s Automotive Repair Shop 
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WEB 330 – Enterprise JavaScript II</title>
+    <link rel="stylesheet" type="text/css" href="../theme.css">
+    <link rel="stylesheet" type="text/css" href="../site.css">
+    <link rel="stylesheet" type="text/css" href="./Logan-future-value.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="../theme.js"></script>
+  </head>
+  <body>
+    <div class="assign-content">
+      <!-- Add an icon using font awesome -->
+      <i onclick="toggleMode(this)" id="icon-mode" 
+      class="fa fa-toggle-off pull-right" style="font-size:28px">
+          <span id="icon-text"></span> 
+      </i>
+      <h1 class="app-header none">Welcome to the Future Value App!</h1>
+      <!-- container to hold the form inputs -->
+      <div class="card">
+        <!-- Title for the card -->
+        <div class="card-title">
+          Future Value Calculator
+        </div>
+        <div class="col-12 danger" id="errorLog"></div>
+        <div class="card-content"> <!-- Start card container -->
+          <!-- Container for the form -->
+         <div class="form container"> <!-- Start form -->
+
+          <div class="row">
+            <!-- Form field containing input to capture user values -->
+           <div class="form-field col-5"> <!-- Start Monthly Payment container -->
+            <label for="txtMonthlyPayment" class="form-label">Monthly Payment:</label>
+           </div> <!-- End Monthly Payment container -->
+           <div class="form-field col-7"> <!-- Start txtMonthlyPayment container -->
+            <input type="text" id="txtMonthlyPayment" class="input">
+           </div> <!-- end txtMonthlyPayment container -->
+          </div>
+           <div class="row">
+             <!-- Form field containing input to capture user values -->
+           <div class="form-field col-5"> <!-- Start Interest Rate container -->
+            <label for="txtYearlyRate" class="form-label">Interest Rate:</label>
+           </div> <!-- End Interest Rate container -->
+           <div class="form-field col-7"> <!-- Start txtYearlyRate container -->
+            <input type="text" id="txtYearlyRate" class="input">
+           </div> <!-- end txtYearlyRate container -->
+           </div>
+           <!-- Display a message -->
+           <i id="dangerMessage" class="danger">Enter 11.1% as 11.1</i>
+           <div class="row">
+             <!-- Form field containing select to capture user selections -->
+           <div class="form-field col-5"> <!-- Start Number of Years container -->
+            <label for="listNumOfYears" class="form-label">Number of Years:</label>
+          </div> <!-- End Number of Years container -->
+          <div class="form-field col-7"> <!-- Start txtYearlyRate container -->
+           <select id="listNumOfYears" name="listNumOfYears" class="drop-down-menu">
+             <option value="1">1</option>
+             <option value="2">2</option>
+             <option value="3">3</option>
+             <option value="4">4</option>
+             <option value="5">5</option>
+             <option value="6">6</option>
+             <option value="7">7</option>
+             <option value="8">8</option>
+             <option value="9">9</option>
+             <option value="10">10</option>
+            </select>
+          </div> <!-- end txtYearlyRate container -->    
+        </div>
+           <!-- Form field containing a button to trigger an event -->
+           <div class="form-field"> <!-- Start button container -->
+             <button class="btn btn-primary full-width" id="btnCalculate">
+              Calculate
+             </button>
+           </div> <!-- End button container -->
+         </div> <!-- End form -->
+       </div> <!-- End card container -->
+      </div>
+      <!-- This link will return to the course landing page -->
+      <a class="return-home" href="../index.html">Return</a>
+
+      <!-- This card will contain the results from the select  -->
+      <div class="card">
+       <div class="card-title">
+        Calculation as of 
+        <span id="today"></span>
+        </div>
+        <!-- Show items added to the shopping cart -->
+        <div class="card-content assign-results-text" id="futureValue">
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      // import modules
+      import {FinanceCalculator} from "./finance-calculator.js";
+      import {Validator} from "./validator.js";
+
+      // set the date on the today element
+      document.getElementById("today").innerHTML = new Date().toLocaleDateString("en-US");
+
+      // onclick listen dlw 
+      document.getElementById("btnCalculate").onclick = () => {
+        const monthlyPayment = document.getElementById("txtMonthlyPayment").value;
+        const rate = document.getElementById("txtYearlyRate").value;
+        const yearValue = document.getElementById("listNumOfYears");
+        const years = yearValue.options[yearValue.selectedIndex].value;
+        const errorLogEl = document.getElementById("errorLog");
+        const monthlyPaymentValidator = new Validator("Monthly Payment", monthlyPayment);
+        
+        // add object to the validator array
+        monthlyPaymentValidator.addRequiredField();
+        monthlyPaymentValidator.addRequiredFloatField();
+        monthlyPaymentValidator.addFloatMinField(100);
+        
+        const rateValidator = new Validator("Interest Rate", rate);
+
+        // add object to the validator array                 
+        rateValidator.addRequiredField();
+        rateValidator.addRequiredFloatField();
+        rateValidator.addFloatMaxField(100);
+
+        // create an empty array to capture the messages
+        const errorLog = [];
+
+        // check for false boolean
+        // then push message to each class message array
+        if(!monthlyPaymentValidator.validate()) {
+          for(let message of monthlyPaymentValidator.messages) {
+            errorLog.push(message);
+          }
+        }
+
+        // check for false boolean
+        // then push message to each class message array
+        if(!rateValidator.validate()) {
+          for(let message of rateValidator.messages) {
+            errorLog.push(message);
+          }
+        }
+
+        // check for both value to be trus
+        if(monthlyPaymentValidator.validate()
+        && rateValidator.validate()) {
+          errorLogEl.innerHTML = "";
+          const futureValue = FinanceCalculator.convertToCurrency(
+            FinanceCalculator.calculateFutureValue(
+              monthlyPayment, rate, years
+            )
+          );
+          
+          // apply the manipulated value to the result div
+          document.getElementById("futureValue").innerHTML = 
+          `The future value is ${futureValue}`;
+        }
+        else {
+          errorLogEl.innerHTML = "";
+
+          let errorList = "";
+          for(let err of errorLog) {
+            errorList += `<li>${err}</li>`;
+          }
+          const errorLogMessage = `<ul>${errorList}</ul>`;
+          errorLogEl.innerHTML = errorLogMessage;
+        }
+
+      }
+
+      
+    </script>
+
+    <script>
+  
+      /*
+        ================================================================
+            Title: theme.html
+            Author: Richard Krasso
+            Date: 3/22/2021
+            Description: Sets the default color scheme for the page. If an
+                         event is triggered on the icon element, the local
+                         storage is cleared and modified to reflect the choice
+                         for future use. 
+        ================================================================
+        */
+
+        /**
+         * Set the default theme to light if one has not been set in the browsers localStorage
+         */
+         setDefaultTheme();
+
+         /**
+          * Function to switch the users selected website theme
+          * @param x (this instance)
+          */
+         function toggleMode(x)
+         {
+             let colorTheme = document.body.classList; // get the body's CSS class
+             let iconMode = x.classList; // get the current classes assigned to the triggered button
+ 
+             /**
+              * If the current body class is set to the light-theme, update the user's preference to the dark-theme in the browsers
+              * local storage.
+              */
+             if (colorTheme.value === "light-theme")
+             {
+                 localStorage.clear();
+                 localStorage.setItem("mode", "dark-theme");
+                 localStorage.setItem("iconMode", "fa-toggle-on");
+                 localStorage.setItem("iconText", "Dark Mode");
+             }
+             /**
+              * If the current body class is set to the dark-theme, update the user's preference to the light-theme in the browsers
+              * local storage.
+              */
+             else
+             {
+                 localStorage.clear();
+                 localStorage.setItem("mode", "light-theme");
+                 localStorage.setItem("iconMode", "fa-toggle-off");
+                 localStorage.setItem("iconText", "Light Mode");
+             }
+ 
+             /**
+              * Apply the updated selection to the HTML page elements
+              */
+             colorTheme.value = localStorage.getItem("mode");
+             iconMode.value = `fa ${localStorage.getItem("iconMode")} pull-right`;
+             document.getElementById("icon-text").innerHTML = localStorage.getItem("iconText");
+         }
+         
+    </script>
+  </body>
+</html>
